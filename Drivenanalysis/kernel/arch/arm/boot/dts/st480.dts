@@ -1,0 +1,17 @@
+/ {
+	senodia@c {
+              compatible = "senodia,st480";
+              reg = <0xc>;
+              vdd-supply = <&pm8916_l17>;
+              vio-supply = <&pm8916_l6>;
+              /*
+               layout : FRONT   0  = 0x0 : BACK   0 = 0x4
+               layout : FRONT  90  = 0x1 : BACK  90 = 0x5
+               layout : FRONT 180  = 0x2 : BACK 180 = 0x6
+               layout : FRONT 270  = 0x3 : BACK 270 = 0x7
+               */
+              senodia,layout = <0x6>;
+              senodia,icsize = <0x2>;
+        };
+
+};

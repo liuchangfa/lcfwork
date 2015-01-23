@@ -1,0 +1,5 @@
+config SNSLED
+    tristate "snsled Driver"
+    default n #y ?
+    help
+    This is the sns led driver.

@@ -1,0 +1,193 @@
+2015-01-05
+-----------------------------------------------------------------------------------------------------------
+1.安装ubuntu 14.04
+2.更新源
+3.安装编译环境
+	1. 安装所有的套件
+	sudo apt-get install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs 
+	x11proto-core-dev libx11-dev lib32readline6-dev lib32z-dev libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown 
+	libxml2-utils xsltproc
+
+
+	2. curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+
+	3.sudo dpkg-reconfigure dash	回答no
+	4. 安装 Sun Java 6
+		以 jdk-6u38-linux-x64.bin 为例
+	jdk-6u38-linux-x64.bin COPY 至 HOME
+	cd ~
+	sudo cp jdk-6u38-linux-x64.bin ~/bin
+	cd ~/bin
+	sudo chmod a+x ~/bin/jdk-6u38-linux-x64.bin
+ 	./jdk-6u38-linux-x64.bin
+	sudo gedit ~/.bashrc &
+	至最后一行加上
+		# local Envrioment
+		export PATH=/home/$LOGNAME/bin/:$PATH
+		#set java environment 
+		JAVA_HOME=/home/$LOGNAME/bin/jdk1.6.0_43
+		export JRE_HOME=/home/$LOGNAME/bin/jdk1.6.0_43/jre
+		export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
+		export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+4.常用快捷键：
+	f11:全屏之间的切换。
+2015-01-08
+------------------------------------------------------------------------------------------------------------
+代码同步到github
+1.建立本地仓库 git init 
+2.添加模块到暂存区 git add
+3.申请gtihub账户名并创建工作区
+4.同步github服务端文件 git pull http//:--
+5.将本地仓库文件上传到github工作区 git push http//:--
+
+
+vim常用功能：
+1.查看包含头文件或函数：
+   1.首先安装一个工具Ctags:sudo apt-get install Ctags
+   2.让后我们进入/usr/include或你的内核目录进行如下操作：ctags　-R *,这会在当前目录下递归的为各个子目录生成一个名为tags标签文件,这个操作在第一次执行后即可。
+   3.进入vim编辑界面输入 :tag　<函数名或宏等>　按TAB键可以进行模式匹配，继续安TAB匹配下一个。
+   4.可是这样查到的东西可能不是你想要的那一个，怎么解决这个问题呢？
+         需要安装一个工具cscope：sudo apt-get install cscope
+         参考1：http://blog.csdn.net/xuwedo2003/article/details/4649860
+         参考2:http://blog.csdn.net/duguteng/article/details/7412652
+   5.vim 里比较文件不同命令：vim -d file1 file2
+   6.常用快捷键：ctrl+shift+c = 复制 ，ctrl+shift+v = 粘贴
+2.常用命令：
+   GG：跳到文件结尾
+   gg：跳到文件开头
+
+3..vimr 内容
+   set cindent
+   set tabstop=4
+   set softtabstop=4
+   set shiftwidth=4
+   set expandtab
+
+   set nobackup
+   set noswapfile
+ 
+   //设置tags路径
+   set tags=tags;
+   set autochdir 
+
+   //增加gb编码，支持window下中文显示
+   let &termencoding=&encoding
+   set fileencodings=utf-8,gbk
+
+     
+ 
+2015-01-10
+------------------------------------------------------------------------------------------------------------
+1.增加模块  ST480.C  ST480.H
+  模块解读：
+     相关数据结构：
+          ssize_t:根据处理器不同，32位为;unsigned int ,64位为unsigned long
+          原子变量：atomic_t，某些处理器上这些操作会有限制，此变量不能记录大于24的整数
+          读写自旋锁:rwlock_t ,一次只能有一个写者，可以有多个读者
+          struct input_dev：相关分析http://blog.csdn.net/string19820108/article/details/7236808
+    相关函数：
+         1.#define container_of（，，）相关分析http://www.cnblogs.com/sdphome/archive/2011/09/14/2176624.html
+         2.input_report_abs(st480->input_dev, ABS_Z, mag.mag_z)：报告同步事件
+         3.input_sync(st480->input_dev);用来告诉上层，本次的事件已经完成了. 
+         4.schedule_delayed_work(&st480->work, msecs_to_jiffies(st480->poll_interval))：http://blog.csdn.net/dedlous/article/details/21529425
+	 5.ioctl是设备驱动程序中对设备的I/O通道进行管理的函数：http://blog.csdn.net/shanshanpt/article/details/19897897
+	 6.copy_from_user函数的目的是从用户空间拷贝数据到内核空间，失败返回没有被拷贝的字节数，成功返回0:http://blog.csdn.net/ying_seven/article/details/6959738
+    相关宏定义：
+         #pragma pack(1) 制定1字节对齐
+         #pragma pack()  恢复默认对齐方式
+
+ 
+   相关知识点：
+         设备树：基本上就是画一棵电路板上CPU、总线、设备组成的树，Bootloader会将这棵树传递给内核，然后内核可以识别这棵树
+                 参考：http://blog.csdn.net/21cnbao/article/details/8457546
+
+
+2.修改文件
+          lcf@lcfubuntu:~/gosomowork/qmss11-8926/LINUX/android/kernel/drivers/gosodrv$ vim Kconfig
+          lcf@lcfubuntu:~/gosomowork/qmss11-8926/LINUX/android/kernel/drivers/gosodrv/sensor$ vim Makefile
+  查看内核版本
+          lcf@lcfubuntu:~/gosomowork/qmss11-8926/LINUX/android/vendor/ACT/S8Q$ cat AndroidBoard.mk     
+               KERNEL_DEFCONFIG := fa1602_defconfig
+  继续改内核文件                     
+          lcf@lcfubuntu:~/gosomowork/qmss11-8926/LINUX/android/kernel/arch/arm/configs$ vim fa1602_defconfig 
+3.编译制作镜像文件
+          lcf@lcfubuntu:~/gosomowork/qmss11-8926/LINUX/android/$ make bootimage -j4
+
+4.继续修改文件   
+          lcf@lcfubuntu:~/gosomowork/qmss11-8926/LINUX/android/kernel/arch/arm/boot/dts/qcom/fa1602$ vim  msm8916-mtp.dtsi 
+          lcf@lcfubuntu:~/gosomowork/qmss11-8926/LINUX/android/kernel/drivers/gosodrv/sensor$ vim st480.c
+
+前面0度
+
+4.编译步骤：
+          source build/envsetup.sh 
+          lunch 
+          make bootimage -j8
+
+5.同步代码：
+          1.修改完代码
+          2.同步并提交 ：git commit -a -m 'a'  编译
+          3.与服务器同步：repo sync ./  
+          
+6.分支创建合并：
+       取消修改文件：git checkout -- <file>
+       取消暂存文件：git reset HEAD <file>
+       修改最近提交：git commit --amend    也可以修改文件，然后再次提交
+       查看所有分支：git branch -a
+       新建分支：git branch iss53
+       切换到改分支：git checkout iss53
+       查看已经合并分支：git branch --merged
+       查看未合并分支：git branch --no-merged
+       新建并切换到该分支：git checkout -b iss53
+       回到主分支：git checkout master
+       合并分支：git merge  iss53
+       合并后删除分支：git branch -d iss53
+       未合并后删除分支：git branch -D iss53
+       把另一个本地分支的commit修改应用到当前分支: git cherry-pick <commit id>
+       撤销提交，退回到暂存区：git reset --hard  <id>
+       撤消该commit，作为一个新的commit：git revert <commit log string>
+       将显示信息输出保存git show > ~/Desktop/gdf.patch
+ 
+7.代码提交：
+    git status .
+    git add
+    git commit  
+    git status .
+    git commit --amend
+    git log -2
+    git branch -a
+    git push caf HEAD:refs/for/msm8916-113508
+
+END:调试手机：密码：*#8702#
+          *按音量下键+电源键 = boot 状态
+          1.lsusb
+          2.adb reboot bootloader   
+          3.fastboot flash boot out/target/product/HL6180W/boot.img
+          4.fastboot reboot
+          5.拔掉usb测试
+
+          查看信息：
+                   fastboot reboot    
+                   adb root
+                   adb shell cat /proc/kmsg | grep -i st480
+
+
+2015-1-14
+-----------------------------------------------------------------------------------------------------
+1.regulator 是驱动中电源管理的基础设施。要先注册到内核中，然后使用这些电压输出的模块get其 regulator,在驱动中的init里，在适当时间中进行电压电流的设置.
+          参考：http://blog.csdn.net/allen6268198/article/details/7357232
+2.IS_ERR 内核是返回其错误值，内核返回的指针一般是指向页面的边界(4K边界)
+         具体代码查看：/kernel/driver/regulator/core.c
+         参考：1.http://blog.csdn.net/xxu0123456789/article/details/6339625      2.http://blog.csdn.net/batoom/article/details/17081651
+2015-1-22
+-----------------------------------------------------------------------------------------------------
+1.编译制定模块 make /drivers/
+2.配置内核：sudo make menuconfig M是编译成可以随时加入的模块，*是编译进入内核，空就是不要
+
+linux设备驱动开发详解源码
+如何让vim正常显示windows下文件的中文
+git如何切换到分支编译
+如何从底层到上层完整
+
+
+

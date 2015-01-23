@@ -1,0 +1,17 @@
+
+#****************************************************************
+#
+# Sensor Drivers configuration
+#
+#*****************************************************************
+
+config SENSORS_ST480
+	tristate "ST480 campass"
+	depends on I2C
+	default n
+	help
+	  Say Y here to enable the ST480 campass Sensor.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called ST480.
+
