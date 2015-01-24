@@ -1,0 +1,53 @@
+1.linux下常用命令
+目录改变: cd
+显示当前目录内容: ls
+查看文件内容: cat vi vim
+删除文件: rm 
+创建目录、文件: mkdir touch
+查看网口命令: ifconfig
+创立软连接: ln -s
+查找命令: find 
+查找字符串: grep
+重定向，管道
+进程查看: ps aux, pidof
+tab键补全
+查找命令文件:which whereis
+命令帮助: man --help
+压缩解压包: bzip gzip tar 
+shell脚本
+
+
+2.网络诊断。
+ping
+traceroute  
+route 
+arp 
+dns
+tcpdump
+iptables 
+
+tracert
+ipconfig 
+
+3.ds701sdk编译。
+交叉编译概念。
+	宿主机，目标机，编译工具链。
+编译工具,gcc,编译过程。
+怎么编译ds701sdk形成镜像。
+
+
+5.linux安装程序
+configure
+make 
+make install
+
+Makefile 文件编写
+
+4.驱动程序编写
+模块
+编进内核
+
+
+6.操作系统启动流程。
+
+
