@@ -1,0 +1,1 @@
+cmd_/home/dennis/book_sourcecode/chap09/kobj/kobj_demo.ko := ld -r -m elf_x86_64 -T /home/dennis/Linux/linux-3.1.6/scripts/module-common.lds --build-id  -o /home/dennis/book_sourcecode/chap09/kobj/kobj_demo.ko /home/dennis/book_sourcecode/chap09/kobj/kobj_demo.o /home/dennis/book_sourcecode/chap09/kobj/kobj_demo.mod.o

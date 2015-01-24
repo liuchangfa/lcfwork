@@ -1,0 +1,1 @@
+cmd_/home/dennis/book_sourcecode/chap11/ramhd_req/ramhd_req.ko := ld -r -m elf_x86_64 -T /home/dennis/Linux/linux-3.1.6/scripts/module-common.lds --build-id  -o /home/dennis/book_sourcecode/chap11/ramhd_req/ramhd_req.ko /home/dennis/book_sourcecode/chap11/ramhd_req/ramhd_req.o /home/dennis/book_sourcecode/chap11/ramhd_req/ramhd_req.mod.o

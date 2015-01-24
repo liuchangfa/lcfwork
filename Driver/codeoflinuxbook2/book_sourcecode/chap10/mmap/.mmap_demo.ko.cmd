@@ -1,0 +1,1 @@
+cmd_/home/dennis/book_sourcecode/chap10/mmap/mmap_demo.ko := ld -r -m elf_x86_64 -T /home/dennis/Linux/linux-3.1.6/scripts/module-common.lds --build-id  -o /home/dennis/book_sourcecode/chap10/mmap/mmap_demo.ko /home/dennis/book_sourcecode/chap10/mmap/mmap_demo.o /home/dennis/book_sourcecode/chap10/mmap/mmap_demo.mod.o
